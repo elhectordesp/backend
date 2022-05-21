@@ -1,0 +1,50 @@
+//Pregunta: 1 nombre: Elección múltiple
+::MEAN:: ¿Cuál forma parte del stack MEAN? 
+{
+=Angular
+~React
+~Next
+~No existe
+}
+
+//Pregunta: 2 nombre: Elección múltiple varias respuestas
+::MEAN2:: ¿Cuál/es forma parte del stack MEAN? 
+{
+~%50%Angular
+~React
+~Next
+~%50%MongoDB
+}
+
+//Pregunta: 3 nombre: Verdadero/Falso
+::MEAN3:: Express forma parte de MEAN {T}
+
+//Pregunta: 4 nombre: Respuesta Corta
+Cual es la base de datos usada en MEAN  
+{
+    =MongoDB
+    =mongodb
+    =mongoDB
+}
+
+//Pregunta: 5 nombre: Palabra perdida
+En prohgramación existe 
+{
+    ~una sola respuestas
+    =más de una respuesta
+    ~infinitas respuestas
+} a los problemas
+
+//Pregunta: 6 nombre: Emparejamiento
+Relacione los siguientes campos 
+{
+    =Windows 10->Software
+    =Teclado->Hardware
+    =Silla gaming->Accesorios externos
+}
+    
+//Pregunta: 7 nombre: Cuestiones numéricas
+¿Cuál es el valor de pi? - pon 3 decimales - 
+{
+#3.14159:0.0005
+}
