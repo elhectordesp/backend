@@ -8,5 +8,6 @@ api.get('/create-intent', IntentController.createIntent);
 api.get('/prueba', IntentController.detectIntent);
 api.get('/createIntentFin', IntentController.createIntentFin);
 api.get('/createIntentPregunta', IntentController.createIntentPregunta);
+api.post('/createIntentPregunta', IntentController.createIntentPregunta);
 
 module.exports = api;

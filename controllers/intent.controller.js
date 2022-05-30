@@ -9,14 +9,9 @@ const contextClient = new dialogflow.ContextsClient({projectId, keyFilename});
 const sessionClient = new dialogflow.SessionsClient({projectId, keyFilename});
 const intentCtrl = {};
 
-
-intentCtrl.pruebas = (req, res) => {
-    console.log('Esta prueba ha salido bien');
-    res.status(200).send({ message: 'fliiiias' });
-}
-
 intentCtrl.createIntentPregunta = async (req, res) => {
-  let i = 0;
+
+  console.log(req.body);
   const agentPath = intentsClient.projectAgentPath(projectId);
     const displayName = req.body.displayName;
     const respuestas = req.body.respuestas;
@@ -74,6 +69,7 @@ intentCtrl.createIntentPregunta = async (req, res) => {
       outputContexts.push(contextoSalidaFin);
 
       console.log(respuestasFinales);
+      respuestasFinales.shift();
   
       const intent = {
         displayName: displayName,
