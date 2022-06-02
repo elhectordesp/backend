@@ -48,3 +48,12 @@ Relacione los siguientes campos
 {
 #3.14159:0.0005
 }
+
+//Pregunta: 1 nombre: Elección múltiple
+::MEAN:: ¿Cual es una legendaria en el Clash Royale? 
+{
+~Valquiria
+~Pekka
+=Princesa
+~Caballero
+}

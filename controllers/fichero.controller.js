@@ -51,10 +51,10 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                     i++;
             
                     enunciados.push([lineAux[0], contadorEnunciados]);
-                    respuestasCorrectas.push([lineAux[1].replace('}', ''), contadorRespuestasCorrectas, 1]);
+                    respuestas.push(['VERDADEROoFALSO', contadorEnunciados]);
+                    respuestasCorrectas.push([lineAux[1].replace('}', ''), contadorRespuestasCorrectas]);
                 } else {
                     if (!line.includes('~') && !line.includes('#') && !line.includes('=') && !line.includes('{') && !line.includes('}')){
-                        console.log('ESTO ESSSSSS ' + line.trim());
                         contadorEnunciados++;
                         enunciados.push([line.trim(), contadorEnunciados]);
                     }
@@ -67,7 +67,8 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                     let lineAux = line.split('{');
 
                     enunciados.push([lineAux[0], contadorEnunciados]);
-                    respuestasCorrectas.push([lineAux[1].replace('}', ''), contadorRespuestasCorrectas, 1]);
+                    respuestas.push(['VERDADEROoFALSO', contadorEnunciados]);
+                    respuestasCorrectas.push([lineAux[1].replace('}', ''), contadorRespuestasCorrectas]);
                 } else {
                     line = line.trim();
                     if (!line.includes('~') && !line.includes('#') && !line.includes('=') && !line.includes('{') && !line.includes('}') && line.length > 0){
@@ -75,7 +76,9 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                         enunciados.push([line.trim(), contadorEnunciados]);
                     }
                     if (line.includes('#')) {
+                        // PREGUNTAS NUMEROS
                         contadorRespuestasCorrectas++;
+                        respuestas.push(['NUMERICA', contadorEnunciados]);
                         respuestasCorrectas.push([line.trim().replace('#', ''), contadorRespuestasCorrectas]);
                     }else {
                         if (line.trim().startsWith('{')) {
@@ -85,12 +88,18 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                             comprobar = false;
                         }
                         if (line.includes('->')) {
+                            // PREGUNTAS DE UNIR CON FLECHAS
                             if (comprobar) {
                                 contadorRespuestasCorrectas++;
                                 comprobar = false;
                             }
+                            respuestas.push([line.trim().replace('=', ''), contadorRespuestasCorrectas]);
                             respuestasCorrectas.push([line.trim().replace('=', ''), contadorRespuestasCorrectas]);
                         } else {
+                            console.log(line);
+                            if (line.startsWith('=') || line.startsWith('~')) {
+                                respuestas.push([line, contadorEnunciados]);
+                            }
                             if (line.includes('=')) {
                                 if (comprobar) {
                                     contadorRespuestasCorrectas++;
@@ -116,9 +125,21 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
         
             if (last) {
                 
-                console.log(enunciados);
-                /*console.log(respuestas);
-                */console.log(respuestasCorrectas);
+                // console.log(enunciados);
+                // console.log(respuestas);
+                // console.log(respuestasCorrectas);
+                axios
+                    .post('http://127.0.0.1:3977/intent/premierpadel', {
+                        enunciados,
+                        respuestas,
+                        respuestasCorrectas,
+                    })
+                    .then(res => {
+                        //console.log(res);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             }
         }
     });  

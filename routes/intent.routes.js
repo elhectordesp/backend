@@ -9,5 +9,7 @@ api.get('/prueba', IntentController.detectIntent);
 api.get('/createIntentFin', IntentController.createIntentFin);
 api.get('/createIntentPregunta', IntentController.createIntentPregunta);
 api.post('/createIntentPregunta', IntentController.createIntentPregunta);
+api.post('/premierpadel', IntentController.prueba);
+api.get('/lolo', IntentController.createIntentRespuesta);
 
 module.exports = api;

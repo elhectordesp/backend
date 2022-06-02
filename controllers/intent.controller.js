@@ -9,9 +9,108 @@ const contextClient = new dialogflow.ContextsClient({projectId, keyFilename});
 const sessionClient = new dialogflow.SessionsClient({projectId, keyFilename});
 const intentCtrl = {};
 
-intentCtrl.createIntentPregunta = async (req, res) => {
+intentCtrl.prueba = async (req, res) => {
+  let enunciadosBody = req.body.enunciados;
+  let respuestasBody = req.body.respuestas;
 
-  console.log(req.body);
+  const agentPath = intentsClient.projectAgentPath(projectId);
+
+  enunciadosBody.forEach(async (enunciado) => {
+    const displayName = "Pregunta" + enunciado[1];
+    const respuestasAux = respuestasBody.filter(resp => resp[1] === enunciado[1]);
+    const respuestas = [];
+    respuestas.push(enunciado[0]);
+    for (let re of respuestasAux) {
+      respuestas.push(re[0]);
+    }
+
+    const respuestasFinales = [{text: {text: ['Hola']} }];
+
+    respuestas.forEach((respuesta) => {
+      let res = [JSON.stringify(respuesta)];
+      const messageText = {
+        text: res,
+      };
+      
+      const message = {
+        text: messageText,
+      };
+      respuestasFinales.push(message);
+    });
+
+    const trainingPhrasesParts = [
+      'Si',
+      'Sii gracias',
+      'Sii porfa',
+      'yes',
+      'yesssss',
+  ];
+  const trainingPhrases = [];
+    
+  trainingPhrasesParts.forEach(trainingPhrasesPart => {
+      const part = {
+          text: trainingPhrasesPart,
+      };
+
+      const trainingPhrase = {
+          type: 'EXAMPLE',
+          parts: [part],
+        };
+
+        trainingPhrases.push(trainingPhrase);
+  });
+
+  let inputContextNames = [];
+  if (enunciado[1] === 1) {
+    inputContextNames.push('projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/' + 'empezarCuestionario1');
+  } else {
+    inputContextNames.push('projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/' + 'siguientePregunta'+ enunciado[1]);
+  }
+
+  let outputContexts = [];
+  let contextoSalida = {};
+  let contextoSalidaFin = {};
+
+  if (enunciado[1] === 1) {
+    contextoSalida = {
+      name: "projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/" + 'respuestaPregunta' + enunciado[1],
+      lifespanCount: 1,
+      parameters: {},
+    };
+  } else {
+    contextoSalida = {
+      name: "projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/" + 'respuestaPregunta' + enunciado[1],
+      lifespanCount: 1,
+      parameters: {},
+    };
+  }
+    outputContexts.push(contextoSalida);
+
+    respuestasFinales.shift();
+
+    const intent = {
+      displayName: displayName,
+      trainingPhrases: trainingPhrases,
+      messages: respuestasFinales,
+      inputContextNames: inputContextNames,
+      outputContexts: outputContexts
+    };
+
+    const createIntentRequest = {
+      parent: agentPath,
+      intent: intent,
+    };
+
+    const [response] = await intentsClient.createIntent(createIntentRequest);
+    //console.log(`Intent ${response.name} created`);
+    //res.status(200).send({ message: `Intent ${response.name} created` });
+    res.status(200);
+
+    
+  });
+}
+
+intentCtrl.createIntentPregunta = async (req, res) => {
   const agentPath = intentsClient.projectAgentPath(projectId);
     const displayName = req.body.displayName;
     const respuestas = req.body.respuestas;
@@ -68,7 +167,6 @@ intentCtrl.createIntentPregunta = async (req, res) => {
       outputContexts.push(contextoSalida);
       outputContexts.push(contextoSalidaFin);
 
-      console.log(respuestasFinales);
       respuestasFinales.shift();
   
       const intent = {
@@ -85,7 +183,76 @@ intentCtrl.createIntentPregunta = async (req, res) => {
       };
 
       const [response] = await intentsClient.createIntent(createIntentRequest);
-      console.log(`Intent ${response.name} created`);
+      res.status(200).send({ message: `Intent ${response.name} created` });
+}
+
+intentCtrl.createIntentRespuesta = async (req, res) => {
+  const agentPath = intentsClient.projectAgentPath(projectId);
+    const displayName = 'Respuesta1';
+
+    const trainingPhrasesParts = [
+        'MONGO',
+    ];
+    const trainingPhrases = [];
+      
+    trainingPhrasesParts.forEach(trainingPhrasesPart => {
+        const part = {
+            text: trainingPhrasesPart,
+            entityType: '@sys.any',
+            alias: 'respuesta1'
+        };
+
+        const trainingPhrase = {
+            type: 'EXAMPLE',
+            parts: [part],
+          };
+
+          trainingPhrases.push(trainingPhrase);
+    });
+
+    let inputContextNames = [];
+      inputContextNames.push('projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/' + 'respuestaPregunta1');
+
+      let outputContexts = [];
+      let contextoSalida = {
+        name: "projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/" + 'siguientePregunta2',
+        lifespanCount: 1,
+        parameters: {},
+      };
+      let contextoSalidaFin = {
+        name: "projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/empezarCuestionario",
+        lifespanCount: 1,
+        parameters: {},
+      };
+      
+      outputContexts.push(contextoSalida);
+      outputContexts.push(contextoSalidaFin);
+
+      const parameters = [{
+        name: '', 
+        displayName: 'respuesta1',
+        mandatory: true,
+        entityTypeDisplayName: '@sys.any',
+        value: '$respuesta1'
+      }];
+  
+      const intent = {
+        displayName: displayName,
+        parameters,
+        trainingPhrases: trainingPhrases,
+        inputContextNames: inputContextNames,
+        outputContexts: outputContexts,
+        webhookState: 'WEBHOOK_STATE_ENABLED',
+        action: 'pregunta1',
+        
+      };
+  
+      const createIntentRequest = {
+        parent: agentPath,
+        intent: intent,
+      };
+
+      const [response] = await intentsClient.createIntent(createIntentRequest);
       res.status(200).send({ message: `Intent ${response.name} created` });
 }
 
