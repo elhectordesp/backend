@@ -9,24 +9,214 @@ const contextClient = new dialogflow.ContextsClient({projectId, keyFilename});
 const sessionClient = new dialogflow.SessionsClient({projectId, keyFilename});
 const intentCtrl = {};
 
-intentCtrl.prueba = async (req, res) => {
+intentCtrl.crearIntentsRespuestas = async (req, res) => {
   let enunciadosBody = req.body.enunciados;
   let respuestasBody = req.body.respuestas;
-
   const agentPath = intentsClient.projectAgentPath(projectId);
 
   enunciadosBody.forEach(async (enunciado) => {
-    const displayName = "Pregunta" + enunciado[1];
+    const displayName = 'Respuesta' + enunciado[1];
+    const trainingPhrasesParts = ['HOLA'];
     const respuestasAux = respuestasBody.filter(resp => resp[1] === enunciado[1]);
-    const respuestas = [];
-    respuestas.push(enunciado[0]);
+    let respuestas = ['HOLA'];
     for (let re of respuestasAux) {
       respuestas.push(re[0]);
     }
 
+    const trainingPhrases = [];
+    
+    respuestas.forEach(respu => {
+      const part = {
+        text: respu,
+        entityType: '@sys.any',
+        alias: 'respuesta1'
+      };
+
+      const trainingPhrase = {
+        type: 'EXAMPLE',
+        parts: [part],
+      };
+
+      trainingPhrases.push(trainingPhrase);
+    });
+
+    let inputContextNames = [];
+      inputContextNames.push('projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/' + 'respuestaPregunta' + enunciado[1]);
+
+      let outputContexts = [];
+      let contextoSalida = {
+        name: "projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/" + 'siguientePregunta' + (enunciado[1]+1),
+        lifespanCount: 1,
+        parameters: {},
+      };
+      let contextoSalidaFin = {
+        name: "projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/empezarCuestionario",
+        lifespanCount: 1,
+        parameters: {},
+      };
+      
+      outputContexts.push(contextoSalida);
+      outputContexts.push(contextoSalidaFin);
+
+      const parameters = [{
+        name: '', 
+        displayName: 'respuesta'+enunciado[1],
+        mandatory: true,
+        entityTypeDisplayName: '@sys.any',
+        value: '$respuesta' + enunciado[1]
+      }];
+
+      const intent = {
+        displayName: displayName,
+        parameters,
+        trainingPhrases: trainingPhrases,
+        inputContextNames: inputContextNames,
+        outputContexts: outputContexts,
+        webhookState: 'WEBHOOK_STATE_ENABLED',
+        action: 'pregunta' + enunciado[1],
+      };
+
+      const createIntentRequest = {
+        parent: agentPath,
+        intent: intent,
+      };
+      const [response] = await intentsClient.createIntent(createIntentRequest);
+      res.status(200).send({ message: `Intent ${response.name} created` });
+  });
+
+/*
+      const createIntentRequest = {
+        parent: agentPath,
+        intent: intent,
+      };
+
+      const [response] = await intentsClient.createIntent(createIntentRequest);
+      res.status(200).send({ message: `Intent ${response.name} created` });
+      */
+     
+}
+
+intentCtrl.crearIntentsPreguntas = async (req, res) => {
+  let enunciadosBody = req.body.enunciados;
+  let respuestasBody = req.body.respuestas;
+  let respuestasCorrectasBody = req.body.respuestasCorrectas;
+
+  const agentPath = intentsClient.projectAgentPath(projectId);
+
+  enunciadosBody.forEach(async (enunciado) => {
+    let primeraParte ='';
+    let segundaParte = '';
+    let esDeUnir = false;
+    let col1 = [];
+    let col2 = [];
+
+    let auxilio = '';
+    auxilio = enunciado[0].toString();
+
+    if (auxilio.includes('/separacion/') ) {
+      primeraParte = auxilio.split('/separacion/')[0];
+      segundaParte = auxilio.split('/separacion/')[1];
+    }
+
+
+    const displayName = "Pregunta" + enunciado[1];
+    const respuestasAux = respuestasBody.filter(resp => resp[1] === enunciado[1]);
+    const respuestasCAux = respuestasCorrectasBody.filter(corr => [corr[1] === enunciado[1]]);
+    const respuestas = [];
+    if (primeraParte === '') {
+      respuestas.push(enunciado[0]);
+    } else {
+      respuestas.push(primeraParte);
+    }
+    
+    for (let re of respuestasAux) {
+      for (let i = 0; i < re[0].length; i++) {
+        if (re[0][i] === '-' && re[0][i+1] === '>') {
+          let pro = '';
+          pro = re[0].toString();
+          col1.push(pro.split('->')[0]);
+          col2.push(pro.split('->')[1]);
+          esDeUnir = true;
+        }
+      }
+
+      let a = [];
+      let b = [];
+
+      let paso = false;
+
+      for (let i = 0; i < enunciadosBody.length; i++) {
+        if (respuestasBody[i] !== undefined){
+          a = respuestasBody.filter((aa) => aa[1] === i);
+        }
+
+          if (respuestasCAux[i] !== undefined){
+            b = respuestasCAux.filter((bb) => bb[1] === i);
+          }
+
+          for (let p = 0; p < enunciadosBody.length; p++) {
+            const a1 = Array.from(a);
+            const a2 = Array.from(b);
+            if (JSON.stringify(a1) === JSON.stringify(a2)) {
+              if ((a1)[p]) {
+                let yy = '';
+                yy = a1[p].toString();
+                if (!yy.includes('->')) {
+                  if (respuestas.length > 1) {
+                    let s = yy.split(',')[0];
+                    if (respuestas[1] === '-'+s) {
+                      respuestas.pop();
+                    }
+                    /*for (let o = 1; o < respuestas.length; o++) {
+                      if (respuestas[o] === )
+                    }*/
+                    // console.log(yy, ' aaaaaa')
+                    // console.log(respuestas, ' eeeee');
+                  }
+                  
+                }
+              }
+            }
+          }
+          
+      }
+      
+
+      
+      if (re[0] !== 'VERDADEROoFALSO' && re[0] !== 'NUMERICA' && !esDeUnir){
+        respuestas.push('-' + re[0]);
+      } else if(re[0] === 'VERDADEROoFALSO' && !esDeUnir) {
+        respuestas.push('(Esta pregunta es de verdadero (T) o falso (F))');
+      } else if (re[0] === 'NUMERICA' && !esDeUnir) {
+        respuestas.push('(Esta respuesta es numérica)');
+      }
+    }
+    if (segundaParte !== '') {
+      respuestas.push(segundaParte);
+    } 
+    if (esDeUnir) {
+      while (col1.length > 0) {
+        let rand1 = Math.floor(Math.random()*col1.length);
+        let rand2 = Math.floor(Math.random()*col2.length);
+        respuestas.push(col1[rand1] + '           ' + col2[rand2]);
+        col1.splice(rand1, rand1+1);
+        col2.splice(rand2, rand2+1);
+      }
+      
+      respuestas.push('(Une las de la izquierda con la de la derecha con este formato: A->B; C->D; E->F;');
+      esDeUnir = false;
+
+      
+    }
+
     const respuestasFinales = [{text: {text: ['Hola']} }];
 
+    if (respuestas.length === 2 && respuestas[1] !== '(Esta respuesta es numérica)' && respuestas[1] !== '(Esta pregunta es de verdadero (T) o falso (F))') {
+      respuestas.pop();
+    }
+
     respuestas.forEach((respuesta) => {
+      
       let res = [JSON.stringify(respuesta)];
       const messageText = {
         text: res,
@@ -104,10 +294,82 @@ intentCtrl.prueba = async (req, res) => {
     const [response] = await intentsClient.createIntent(createIntentRequest);
     //console.log(`Intent ${response.name} created`);
     //res.status(200).send({ message: `Intent ${response.name} created` });
-    res.status(200);
+    
 
     
   });
+
+  // RESPUESTAS
+
+  enunciadosBody.forEach(async (enunciado) => {
+    const displayName = 'Respuesta' + enunciado[1];
+    const trainingPhrasesParts = ['HOLA'];
+    const respuestasAux = respuestasBody.filter(resp => resp[1] === enunciado[1]);
+    let respuestas = ['HOLA'];
+    
+    const trainingPhrases = [];
+    
+    respuestas.forEach(respu => {
+      const part = {
+        text: respu,
+        entityType: '@sys.any',
+        alias: 'respuesta'+enunciado[1]
+      };
+
+      const trainingPhrase = {
+        type: 'EXAMPLE',
+        parts: [part],
+      };
+
+      trainingPhrases.push(trainingPhrase);
+    });
+
+    let inputContextNames = [];
+      inputContextNames.push('projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/' + 'respuestaPregunta' + enunciado[1]);
+
+      let outputContexts = [];
+      let contextoSalida = {
+        name: "projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/" + 'siguientePregunta' + (enunciado[1]+1),
+        lifespanCount: 1,
+        parameters: {},
+      };
+      let contextoSalidaFin = {
+        name: "projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/empezarCuestionario",
+        lifespanCount: 1,
+        parameters: {},
+      };
+      
+      outputContexts.push(contextoSalida);
+      outputContexts.push(contextoSalidaFin);
+
+      const parameters = [{
+        name: '', 
+        displayName: 'respuesta'+enunciado[1],
+        mandatory: true,
+        entityTypeDisplayName: '@sys.any',
+        value: '$respuesta' + enunciado[1]
+      }];
+
+      const intent = {
+        displayName: displayName,
+        parameters,
+        trainingPhrases: trainingPhrases,
+        inputContextNames: inputContextNames,
+        outputContexts: outputContexts,
+        webhookState: 'WEBHOOK_STATE_ENABLED',
+        action: 'pregunta' + enunciado[1],
+      };
+
+      const createIntentRequest = {
+        parent: agentPath,
+        intent: intent,
+      };
+      const [response] = await intentsClient.createIntent(createIntentRequest);
+      // res.status(200).send({ message: `Intent ${response.name} created` });
+  });
+
+
+  res.status(200);
 }
 
 intentCtrl.createIntentPregunta = async (req, res) => {

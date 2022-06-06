@@ -1,6 +1,6 @@
 'use strict'
 const lineReader = require('line-reader');
-const IntentController = require('../controllers/intent.controller');
+const IntentController = require('./intent.controller');
 const axios = require('axios');
 
 const ficheroCtrl = {};
@@ -34,22 +34,6 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                         contextoEntrada= 'empezarCuestionario1';
                     }
                     
-
-                    /*axios
-                    .post('http://127.0.0.1:3977/intent/createIntentPregunta', {
-                        displayName: 'Pregunta'+i,
-                        respuestas: ['¿Verdadero o Falso?', lineAux[0]],
-                        contextoEntrada: contextoEntrada,
-                        contextoSalida: 'respuestaPregunta'+i
-                    })
-                    .then(res => {
-                        //console.log(res);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });*/
-                    i++;
-            
                     enunciados.push([lineAux[0], contadorEnunciados]);
                     respuestas.push(['VERDADEROoFALSO', contadorEnunciados]);
                     respuestasCorrectas.push([lineAux[1].replace('}', ''), contadorRespuestasCorrectas]);
@@ -85,6 +69,9 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                             comprobar = true;
                         }
                         if (line.trim().startsWith('}')) {
+                            if (line.trim().length > 1) {
+                                enunciados.push([line.trim().replace('}', ''), contadorEnunciados]);
+                            }
                             comprobar = false;
                         }
                         if (line.includes('->')) {
@@ -96,9 +83,8 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                             respuestas.push([line.trim().replace('=', ''), contadorRespuestasCorrectas]);
                             respuestasCorrectas.push([line.trim().replace('=', ''), contadorRespuestasCorrectas]);
                         } else {
-                            console.log(line);
                             if (line.startsWith('=') || line.startsWith('~')) {
-                                respuestas.push([line, contadorEnunciados]);
+                                respuestas.push([line.trim().replace('~', '').replace('=', ''), contadorEnunciados]);
                             }
                             if (line.includes('=')) {
                                 if (comprobar) {
@@ -124,10 +110,28 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
             }
         
             if (last) {
-                
-                // console.log(enunciados);
-                // console.log(respuestas);
-                // console.log(respuestasCorrectas);
+
+
+                for (let re of respuestas) {
+                    let pro = '';
+                    pro = re[0].toString();
+                    if (pro.startsWith('%')) {
+                        pro = pro.split('%')[2];
+                        re[0] = pro;
+                    }
+                }
+
+                for (let i = 0; i < enunciados.length; i++) {
+                    if (i+1 != enunciados.length) {
+                        if (enunciados[i][1] === enunciados[i+1][1]) {
+                            // se repiten
+                            enunciados[i][0] = enunciados[i][0] + '/separacion/' + enunciados[i+1][0];
+                            enunciados.splice(i+1, 1);
+                        }
+                    }
+                    
+                } 
+
                 axios
                     .post('http://127.0.0.1:3977/intent/premierpadel', {
                         enunciados,
@@ -140,6 +144,18 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                     .catch(error => {
                         console.error(error);
                     });
+                    /*axios
+                    .post('http://127.0.0.1:3977/intent/lele', {
+                        enunciados,
+                        respuestas,
+                        respuestasCorrectas,
+                    })
+                    .then(res => {
+                        //console.log(res);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });*/
             }
         }
     });  

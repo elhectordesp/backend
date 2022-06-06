@@ -16,11 +16,8 @@ agentCtrl.createAgent = async (req, res) => {
     console.log('entro');
     const agent = {
         parent: parent,
-        displayName: 'TFG_HECTOR19',
-        defaultLanguageCode: 'en',
-        supportedLanguageCodes: [
-            'es'
-          ],
+        displayName: 'TFG_HECTOR21',
+        defaultLanguageCode: 'es-es',
         timeZone: 'Europe/Paris'
     };
 
