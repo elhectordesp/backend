@@ -118,7 +118,6 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
       segundaParte = auxilio.split('/separacion/')[1];
     }
 
-
     const displayName = "Pregunta" + enunciado[1];
     const respuestasAux = respuestasBody.filter(resp => resp[1] === enunciado[1]);
     const respuestasCAux = respuestasCorrectasBody.filter(corr => [corr[1] === enunciado[1]]);
@@ -126,7 +125,7 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
     if (primeraParte === '') {
       respuestas.push(enunciado[0]);
     } else {
-      respuestas.push(primeraParte);
+      respuestas.push(primeraParte + '_______________' + segundaParte);
     }
     
     for (let re of respuestasAux) {
@@ -167,11 +166,6 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
                     if (respuestas[1] === '-'+s) {
                       respuestas.pop();
                     }
-                    /*for (let o = 1; o < respuestas.length; o++) {
-                      if (respuestas[o] === )
-                    }*/
-                    // console.log(yy, ' aaaaaa')
-                    // console.log(respuestas, ' eeeee');
                   }
                   
                 }
@@ -191,9 +185,7 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
         respuestas.push('(Esta respuesta es numérica)');
       }
     }
-    if (segundaParte !== '') {
-      respuestas.push(segundaParte);
-    } 
+    
     if (esDeUnir) {
       while (col1.length > 0) {
         let rand1 = Math.floor(Math.random()*col1.length);
@@ -292,7 +284,6 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
     };
 
     const [response] = await intentsClient.createIntent(createIntentRequest);
-    //console.log(`Intent ${response.name} created`);
     //res.status(200).send({ message: `Intent ${response.name} created` });
     
 
@@ -368,8 +359,132 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
       // res.status(200).send({ message: `Intent ${response.name} created` });
   });
 
+  // finDeCuestionario
+  const displayName = "FinDeCuestionario";
+    const respuestas = ['Has acabado el cuestionario, se han guardado tus respuestas para su análisis. Un saludo.']
+    const respuestasFinales = [{text: {text: ['Hola']} }];
+    respuestas.forEach((respuesta) => {
+      let res = [JSON.stringify(respuesta)];
+      const messageText = {
+        text: res,
+      };
+      
+      const message = {
+        text: messageText,
+      };
+      respuestasFinales.push(message);
+    });
 
-  res.status(200);
+    const trainingPhrasesParts = [
+        'Si',
+        'Sii gracias',
+        'Sii porfa',
+        'yes',
+        'yesssss',
+    ];
+    const trainingPhrases = [];
+      
+    trainingPhrasesParts.forEach(trainingPhrasesPart => {
+        const part = {
+            text: trainingPhrasesPart,
+        };
+
+        const trainingPhrase = {
+            type: 'EXAMPLE',
+            parts: [part],
+          };
+
+          trainingPhrases.push(trainingPhrase);
+    });
+
+    let inputContextNames = [];
+      inputContextNames.push('projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/' + 'siguientePregunta'+enunciadosBody.length);
+
+      let outputContexts = [];
+      
+
+      respuestasFinales.shift();
+  
+      const intent = {
+        displayName: displayName,
+        trainingPhrases: trainingPhrases,
+        messages: respuestasFinales,
+        endInteraction: true,
+        inputContextNames: inputContextNames,
+        outputContexts: outputContexts
+      };
+  
+      const createIntentRequest = {
+        parent: agentPath,
+        intent: intent,
+      };
+
+      const [response] = await intentsClient.createIntent(createIntentRequest);
+
+      // finConversacion
+  const displayName1 = "FinConversacion";
+  const respuestas1 = ['Vale, esperemos volver a verte. Un saludo.']
+  const respuestasFinales1 = [{text: {text: ['Hola']} }];
+  respuestas1.forEach((respuesta) => {
+    let res = [JSON.stringify(respuesta)];
+    const messageText = {
+      text: res,
+    };
+    
+    const message = {
+      text: messageText,
+    };
+    respuestasFinales1.push(message);
+  });
+
+  const trainingPhrasesParts1 = [
+      'No',
+      'No gracias',
+      'Noo porfa',
+      'noooo',
+      'nono',
+  ];
+  const trainingPhrases1 = [];
+    
+  trainingPhrasesParts1.forEach(trainingPhrasesPart => {
+      const part = {
+          text: trainingPhrasesPart,
+      };
+
+      const trainingPhrase = {
+          type: 'EXAMPLE',
+          parts: [part],
+        };
+
+        trainingPhrases1.push(trainingPhrase);
+  });
+
+  let inputContextNames1 = [];
+    inputContextNames1.push('projects/tfg-hector-nmsv/agent/sessions/prueba/contexts/' + 'empezarCuestionario');
+
+    let outputContexts1 = [];
+    
+
+    respuestasFinales1.shift();
+
+    const intent1 = {
+      displayName: displayName1,
+      trainingPhrases: trainingPhrases1,
+      messages: respuestasFinales1,
+      endInteraction: true,
+      inputContextNames: inputContextNames1,
+      outputContexts: outputContexts1
+    };
+
+    const createIntentRequest1 = {
+      parent: agentPath,
+      intent: intent1,
+    };
+
+    const [response1] = await intentsClient.createIntent(createIntentRequest1);
+
+
+  res.status(200).send({message: 'Creados correctamente'});
 }
 
 intentCtrl.createIntentPregunta = async (req, res) => {
@@ -519,7 +634,6 @@ intentCtrl.createIntentRespuesta = async (req, res) => {
 }
 
 intentCtrl.createIntent = async (req, res) => {
-  console.log(req.body);
     const agentPath = intentsClient.projectAgentPath(projectId);
     const displayName = req.body.displayName;
     const messageTexts = ['Vale, vuelve a hablarme si quieres hacer un cuestionario. :)'];
@@ -578,7 +692,6 @@ intentCtrl.createIntent = async (req, res) => {
 
       // Create the intent
     const [response] = await intentsClient.createIntent(createIntentRequest);
-    console.log(`Intent ${response.name} created`);
     res.status(200).send({ message: `Intent ${response.name} created` });
     //res.status(200);
 }
@@ -632,7 +745,6 @@ intentCtrl.createIntentFin = async (req, res) => {
 
     // Create the intent
   const [response] = await intentsClient.createIntent(createIntentRequest);
-  console.log(`Intent ${response.name} created`);
   res.status(200).send({ message: `Intent ${response.name} created` });
 }
 
@@ -670,11 +782,10 @@ intentCtrl.detectIntent = async () => {
 
   // Send request and log result
   const responses = await sessionClient.detectIntent(request);
-  console.log('Detected intent');
-  const result = responses[0].queryResult;
-  console.log(`  Query: ${result.queryText}`);
-  console.log(`  Response: ${result.fulfillmentText}`);
-  console.log(`  Output Contexts: ${JSON.stringify(result.outputContexts)}`)
+}
+
+intentCtrl.deleteIntent = async () => {
+  
 }
 
 
