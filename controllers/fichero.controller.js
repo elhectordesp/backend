@@ -2,10 +2,12 @@
 const lineReader = require('line-reader');
 const IntentController = require('./intent.controller');
 const axios = require('axios');
+const config = require('../config');
 
 const ficheroCtrl = {};
 
 ficheroCtrl.lecturaFichero = async (req, res) => {
+    let idCuestionario = '';
     let i = 0;
     let splitAux;
     let enunciados = [];
@@ -140,22 +142,48 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                     })
                     .then(res => {
                         //console.log(res);
+                        
+                        axios
+                            .post('http://localhost:3999/api/cuestionario/crear-cuestionario', {
+                                nombre: 'Cuestionario1',
+                            })
+                            .then(res => { 
+                                idCuestionario = res.data.cuestionario._id;
+                                for (const enun of enunciados) {
+                                    axios.post('http://localhost:3999/api/enunciado/crear-enunciado', {
+                                        numPregunta: enun[1],
+                                        cuestionario: res.data.cuestionario._id,
+                                        titulo: enun[0]
+                                    })
+                                    .then((res) => {
+                                        config.CUESTIONARIO_ID = idCuestionario;
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    })
+                                }
+
+                                for (const respC of respuestasCorrectas) {
+                                    axios.post('http://localhost:3999/api/respuestaCorrecta/crear-respuesta-correcta', {
+                                        numPregunta: respC[1],
+                                        cuestionario: res.data.cuestionario._id,
+                                        texto: respC[0]
+                                    })
+                                    .then((res) => {
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    })
+                                }
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
                     })
                     .catch(error => {
                         console.error(error);
+                        
                     });
-                    /*axios
-                    .post('http://127.0.0.1:3977/intent/lele', {
-                        enunciados,
-                        respuestas,
-                        respuestasCorrectas,
-                    })
-                    .then(res => {
-                        //console.log(res);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });*/
             }
         }
     });  

@@ -1,31 +1,12 @@
 'use strict'
 
 var app = require('./app');
-var port = process.env.PORT || 3977;/*
-
-app.listen(port, () => {
-    console.log('Servidor funcionando en: http://localhost:' + port);
-});*/
-
-/*const https = require('https');
-const fs = require('fs');
-const options = {
-  key: fs.readFileSync('localhost-key.pem'),
-  cert: fs.readFileSync('localhost.pem'),
-};
-https
-  .createServer(options, app)
-  .listen({port}, () => {
-      console.log('https://localhost:3977/pruebas');
-  });
-  */
-
-  //var express = require("express");
+var port = process.env.PORT || 3977;
 var bodyParser = require("body-parser");
 const ngrok = require('ngrok');
 const { response } = require("express");
-
-//var app = express();
+const axios = require('axios');
+const config = require('./config');
 
 var port = process.env.PORT || 3977;
 var ip = process.env.IP || "127.0.0.1";
@@ -34,12 +15,41 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.post('/', function (req, res) {
+  let aux = '';
+  let respuestas = [];
+  // console.log(req.body.queryResult);
     if (req.body.queryResult.action == "pregunta1") {
         let res1 = req.body.queryResult.parameters.respuesta1;
+        let res2 = '';
+        res2 = req.body.queryResult.parameters.respuesta1.toString();
         let response = "Se ha registrado tu respuesta <<" + res1 + ">> ¿Quieres seguir con el cuestionario?";
-              res.json({
+
+        
+          axios.get('http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1')
+          .then((res) => {
+            aux = res.data.cuestionario[0]._id;
+            
+            axios.post('http://localhost:3999/api/respuestaCorrecta/obtener-respuestas', {
+              cuestionario: res.data.cuestionario[0]._id
+            })
+            .then((res) => {
+              console.log(res.data.length);
+              respuestas = res.data;
+              if (res2.trim().toLowerCase() === respuestas[0].texto.trim().toLowerCase()) {
+                console.log('es buenaaaaaaa');
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+          res.json({
             "fulfillmentText": response
-        });
+          });              
     }
 
     if (req.body.queryResult.action == "pregunta2") {
