@@ -182,7 +182,7 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
       } else if(re[0] === 'VERDADEROoFALSO' && !esDeUnir) {
         respuestas.push('(Esta pregunta es de verdadero (T) o falso (F))');
       } else if (re[0] === 'NUMERICA' && !esDeUnir) {
-        respuestas.push('(Esta respuesta es numérica)');
+        respuestas.push('(Esta respuesta es numérica, usa el . como separador decimal)');
       }
     }
     
