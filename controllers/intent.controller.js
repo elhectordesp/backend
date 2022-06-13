@@ -182,7 +182,7 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
       } else if(re[0] === 'VERDADEROoFALSO' && !esDeUnir) {
         respuestas.push('(Esta pregunta es de verdadero (T) o falso (F))');
       } else if (re[0] === 'NUMERICA' && !esDeUnir) {
-        respuestas.push('(Esta respuesta es numérica, usa el . como separador decimal)');
+        respuestas.push('(Esta respuesta es numérica, usa el . como separador decimal y redondea hacia arriba)');
       }
     }
     
@@ -195,7 +195,7 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
         col2.splice(rand2, rand2+1);
       }
       
-      respuestas.push('(Une las de la izquierda con la de la derecha con este formato: A->B; C->D; E->F;');
+      respuestas.push('(Une las de la izquierda con la de la derecha con este formato: A->B; C->D; E->F;)');
       esDeUnir = false;
 
       
@@ -203,8 +203,12 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
 
     const respuestasFinales = [{text: {text: ['Hola']} }];
 
-    if (respuestas.length === 2 && respuestas[1] !== '(Esta respuesta es numérica)' && respuestas[1] !== '(Esta pregunta es de verdadero (T) o falso (F))') {
+    if (respuestas.length === 2 && respuestas[1] !== '(Esta respuesta es numérica, usa el . como separador decimal y redondea hacia arriba)' && respuestas[1] !== '(Esta pregunta es de verdadero (T) o falso (F))') {
       respuestas.pop();
+    }
+
+    if (respuestas.length !== 1 && respuestas[respuestas.length - 1] !== '(Esta respuesta es numérica, usa el . como separador decimal y redondea hacia arriba)' && respuestas[respuestas.length - 1] !== '(Esta pregunta es de verdadero (T) o falso (F))' && respuestas[respuestas.length -1] !== '(Une las de la izquierda con la de la derecha con este formato sin espacios entre respuesta y -> como en el ejemplo: A->B; C->D; E->F;)') {
+      respuestas.push('(Si existe más de una respuesta separalas con -> , -> p.ej. ala, pico  )');
     }
 
     respuestas.forEach((respuesta) => {
@@ -359,6 +363,7 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
       // res.status(200).send({ message: `Intent ${response.name} created` });
   });
 
+  /*
   // finDeCuestionario
   const displayName = "FinDeCuestionario";
     const respuestas = ['Has acabado el cuestionario, se han guardado tus respuestas para su análisis. Un saludo.']
@@ -420,6 +425,8 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
       };
 
       const [response] = await intentsClient.createIntent(createIntentRequest);
+
+      */
 
       // finConversacion
   const displayName1 = "FinConversacion";

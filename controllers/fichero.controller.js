@@ -134,6 +134,12 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                     
                 } 
 
+                console.log(enunciados.length);
+
+                config.ENUNCIADOS = enunciados.length;
+
+                console.log(config.ENUNCIADOS);
+
                 axios
                     .post('http://127.0.0.1:3977/intent/premierpadel', {
                         enunciados,
