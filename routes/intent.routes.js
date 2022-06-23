@@ -12,5 +12,6 @@ api.get('/createIntentPregunta', IntentController.createIntentPregunta);
 api.post('/premierpadel', IntentController.crearIntentsPreguntas);
 api.get('/lolo', IntentController.createIntentRespuesta);
 api.post('/lele', IntentController.crearIntentsRespuestas);
+api.get('/borra', IntentController.borrarIntent);
 
 module.exports = api;

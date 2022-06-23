@@ -9,6 +9,31 @@ const contextClient = new dialogflow.ContextsClient({projectId, keyFilename});
 const sessionClient = new dialogflow.SessionsClient({projectId, keyFilename});
 const intentCtrl = {};
 
+
+intentCtrl.borrarIntent = async (req, res) => {
+
+  const projectAgentPath = intentsClient.projectAgentPath(projectId);
+
+  console.log(projectAgentPath);
+
+  const request = {
+    parent: projectAgentPath,
+  };
+
+  // Send the request for listing intents.
+  const [response] = await intentsClient.listIntents(request);
+  response.forEach(intent => {
+    console.log('====================');
+    console.log(`Intent name: ${intent.name}`);
+    console.log(`Intent display name: ${intent.displayName}`);
+    console.log(`Action: ${intent.action}`);
+    console.log(`Root folowup intent: ${intent.rootFollowupIntentName}`);
+    console.log(`Parent followup intent: ${intent.parentFollowupIntentName}`);
+
+
+}
+)};
+
 intentCtrl.crearIntentsRespuestas = async (req, res) => {
   let enunciadosBody = req.body.enunciados;
   let respuestasBody = req.body.respuestas;

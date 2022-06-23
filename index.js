@@ -54,22 +54,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 1,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 1) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -78,23 +104,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 1) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta2") {
@@ -108,22 +117,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 2,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 2) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -132,23 +167,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 2) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta3") {
@@ -162,22 +180,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 3,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 3) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -186,23 +230,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 3) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta4") {
@@ -216,22 +243,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 4,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 4) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -240,23 +293,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 4) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta5") {
@@ -270,22 +306,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 5,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 5) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -294,23 +356,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 5) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta6") {
@@ -324,22 +369,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 6,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 6) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -348,23 +419,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 6) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta7") {
@@ -378,22 +432,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 7,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 7) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -402,23 +482,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 7) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta8") {
@@ -449,6 +512,16 @@ app.post("/", function (req, res) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             if (config.ENUNCIADOS === 8) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
               response =
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
@@ -460,7 +533,7 @@ app.post("/", function (req, res) {
                 res1 +
                 ">> ¿Quieres seguir con el cuestionario?";
             }
-        
+
             res.json({
               fulfillmentText: response,
             });
@@ -472,8 +545,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    
   }
 
   if (req.body.queryResult.action == "pregunta9") {
@@ -487,22 +558,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 9,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 9) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -511,23 +608,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 9) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta10") {
@@ -541,22 +621,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 10,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 10) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -565,23 +671,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 10) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta11") {
@@ -595,22 +684,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 11,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 11) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -619,23 +734,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 11) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta12") {
@@ -649,22 +747,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 12,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 12) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -673,23 +797,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 12) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta13") {
@@ -703,22 +810,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 13,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 13) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -727,23 +860,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 13) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta14") {
@@ -757,22 +873,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 14,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 14) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -781,23 +923,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 14) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta15") {
@@ -811,22 +936,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 15,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 15) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -835,23 +986,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 15) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta16") {
@@ -865,22 +999,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 16,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 16) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -889,23 +1049,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 16) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta17") {
@@ -919,22 +1062,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 17,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 17) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -943,23 +1112,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 17) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta18") {
@@ -973,22 +1125,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 18,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 18) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -997,23 +1175,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 18) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 
   if (req.body.queryResult.action == "pregunta19") {
@@ -1027,22 +1188,48 @@ app.post("/", function (req, res) {
       .get(
         "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
       )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
+      .then((resA) => {
+        aux = resA.data.cuestionario[0]._id;
 
         axios
           .post(
             "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
             {
-              cuestionario: res.data.cuestionario[0]._id,
+              cuestionario: resA.data.cuestionario[0]._id,
               numPregunta: 19,
               respuestas: res1,
             }
           )
-          .then((res) => {
-            if (res.data) {
+          .then((res8) => {
+            if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            if (config.ENUNCIADOS === 19) {
+              axios
+                .post("http://localhost:3999/api/evaluacion/crear-evaluacion", {
+                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                  cuestionario: resA.data.cuestionario[0]._id,
+                  fecha: new Date(),
+                })
+                .then((res) => {})
+                .catch((error) => {
+                  console.error(error);
+                });
+              response =
+                "Has acabado el cuestionario, tu puntuación es: " +
+                config.CONTADOR_ACIERTOS +
+                " de " +
+                config.ENUNCIADOS;
+            } else {
+              response =
+                "Se ha registrado tu respuesta <<" +
+                res1 +
+                ">> ¿Quieres seguir con el cuestionario?";
+            }
+
+            res.json({
+              fulfillmentText: response,
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -1051,77 +1238,6 @@ app.post("/", function (req, res) {
       .catch((error) => {
         console.error(error);
       });
-
-    if (config.ENUNCIADOS === 19) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
-  }
-
-  if (req.body.queryResult.action == "pregunta20") {
-    let res1 = req.body.queryResult.parameters.respuesta20;
-    let res2 = "";
-    res2 = req.body.queryResult.parameters.respuesta20.toString();
-
-    let response = "";
-
-    axios
-      .get(
-        "http://localhost:3999/api/cuestionario/obtener-cuestionario/Cuestionario1"
-      )
-      .then((res) => {
-        aux = res.data.cuestionario[0]._id;
-
-        axios
-          .post(
-            "http://localhost:3999/api/respuestaCorrecta/corregir-pregunta",
-            {
-              cuestionario: res.data.cuestionario[0]._id,
-              numPregunta: 20,
-              respuestas: res1,
-            }
-          )
-          .then((res) => {
-            if (res.data) {
-              config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    if (config.ENUNCIADOS === 20) {
-      response =
-        "Has acabado el cuestionario, tu puntuación es: " +
-        config.CONTADOR_ACIERTOS +
-        " de " +
-        config.ENUNCIADOS;
-    } else {
-      response =
-        "Se ha registrado tu respuesta <<" +
-        res1 +
-        ">> ¿Quieres seguir con el cuestionario?";
-    }
-
-    res.json({
-      fulfillmentText: response,
-    });
   }
 });
 
