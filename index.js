@@ -1243,7 +1243,7 @@ app.post("/", function (req, res) {
 
 app.listen(port, ip);
 
-(async function () {
+/*(async function () {
   const url = await ngrok.connect(port);
   console.log(url);
-})();
+})();*/
