@@ -139,7 +139,7 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                 config.ENUNCIADOS = enunciados.length;
 
                 axios
-                    .post('http://127.0.0.1:3977/intent/premierpadel', {
+                    .post('https://tfg-hector-22.herokuapp.com/intent/premierpadel', {
                         enunciados,
                         respuestas,
                         respuestasCorrectas,
