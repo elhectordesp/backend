@@ -1241,9 +1241,11 @@ app.post("/", function (req, res) {
   }
 });
 
-app.listen(port, ip);
+app.listen(port, () => {
+  console.log('Servidor en el puerto', port);
+});
 
-(async function () {
+/*(async function () {
   const url = await ngrok.connect(port);
   console.log(url);
-})();
+})();*/
