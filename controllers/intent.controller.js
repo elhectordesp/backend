@@ -8,11 +8,10 @@ const intentsClient = new dialogflow.IntentsClient({ projectId, keyFilename });
 const contextClient = new dialogflow.ContextsClient({ projectId, keyFilename });
 const sessionClient = new dialogflow.SessionsClient({ projectId, keyFilename });
 const intentCtrl = {};
+const axios = require('axios');
 
 intentCtrl.borrarIntent = async (req, res) => {
   const projectAgentPath = intentsClient.projectAgentPath(projectId);
-
-  console.log(projectAgentPath);
 
   const request = {
     parent: projectAgentPath,
@@ -255,7 +254,6 @@ intentCtrl.crearIntentsPreguntas = async (req, res) => {
       respuestas[respuestas.length - 1] !==
         "(Une las de la izquierda con la de la derecha con este formato sin espacios entre respuesta y -> como en el ejemplo: A->B; C->D; E->F;)"
     ) {
-      console.log(respuestas);
       if (
         respuestas[respuestas.length - 1] ===
         "(Une las de la izquierda con la de la derecha con este formato: A->B; C->D; E->F;)"

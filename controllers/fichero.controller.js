@@ -134,11 +134,7 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                     
                 } 
 
-                console.log(enunciados.length);
-
                 config.ENUNCIADOS = enunciados.length;
-
-                console.log(config.ENUNCIADOS);
 
                 axios
                     .post('http://127.0.0.1:3977/intent/premierpadel', {
@@ -146,9 +142,7 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                         respuestas,
                         respuestasCorrectas,
                     })
-                    .then(res => {
-                        //console.log(res);
-                        
+                    .then(res => {                        
                         axios
                             .post('http://localhost:3999/api/cuestionario/crear-cuestionario', {
                                 nombre: 'Cuestionario1',
