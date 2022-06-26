@@ -18,6 +18,8 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
     let contadorEnunciados = 0;
     let comprobar = false;
 
+    console.log('entroooo');
+
     await lineReader.eachLine('./files/copia.txt', (line, last) => {
         if (!line.includes('//')) {
             if (line.includes('::')) {
