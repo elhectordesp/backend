@@ -15,6 +15,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(fileUpload());
 
+// Configurar cabeceras y cors
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+});
+
 // Configurar cabeceras HTTP
 
 // rutas base
@@ -24,6 +33,7 @@ app.get('/pruebas', (req, res) => {
 });
 
 app.post('/upload', (req, res) => {
+    console.log('entro aqui');
     let EDFile = req.files.file;
     EDFile.mv(`./files/copia.txt`, err => {
         if (err) return res.status(500).send({ message: err });
@@ -35,21 +45,6 @@ app.post('/upload', (req, res) => {
 app.use('/agent', agent_routes);
 app.use('/intent', intent_routes);
 app.use('/fichero', fichero_routes);
-
-// const express = require("express");
-// const bodyParser = require("body-parser");
-
-// Para hacer peticiones http de forma simple
-const request = require('request');
-
-// Para usar express dentro de Node
-// const app = express();
-
-// Definimos el puerto
-// const port = process.env.PORT || 8899;
-
-// Traducción en tiempo real
-const translate = require('google-translate-api');
 
 // Middleware de análisis del cuerpo de Node.js 
 app.use(bodyParser.urlencoded({ extended: false }));
