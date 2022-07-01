@@ -10,7 +10,7 @@ const config = require("./config");
 const { CONTADOR_ACIERTOS, ENUNCIADOS, CUESTIONARIO_ID } = require("./config");
 
 var port = process.env.PORT || 3977;
-var ip = process.env.IP || "127.0.0.1";
+// var ip = process.env.IP || "127.0.0.1";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
