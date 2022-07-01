@@ -139,20 +139,20 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                 config.ENUNCIADOS = enunciados.length;
 
                 axios
-                    .post('https://tfg-hector-22.herokuapp.com/intent/premierpadel', {
+                    .post('https://prueba-mongodb-tfg.herokuapp.com/intent/premierpadel', {
                         enunciados,
                         respuestas,
                         respuestasCorrectas,
                     })
                     .then(res => {                        
                         axios
-                            .post('https://tfg-hector-22.herokuapp.com/api/cuestionario/crear-cuestionario', {
+                            .post('https://prueba-mongodb-tfg.herokuapp.com/api/cuestionario/crear-cuestionario', {
                                 nombre: 'Cuestionario1',
                             })
                             .then(res => { 
                                 idCuestionario = res.data.cuestionario._id;
                                 for (const enun of enunciados) {
-                                    axios.post('https://tfg-hector-22.herokuapp.com/api/enunciado/crear-enunciado', {
+                                    axios.post('https://prueba-mongodb-tfg.herokuapp.com/api/enunciado/crear-enunciado', {
                                         numPregunta: enun[1],
                                         cuestionario: res.data.cuestionario._id,
                                         titulo: enun[0]
@@ -166,7 +166,7 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                                 }
 
                                 for (const respC of respuestasCorrectas) {
-                                    axios.post('https://tfg-hector-22.herokuapp.com/api/respuestaCorrecta/crear-respuesta-correcta', {
+                                    axios.post('https://prueba-mongodb-tfg.herokuapp.com/api/respuestaCorrecta/crear-respuesta-correcta', {
                                         numPregunta: respC[1],
                                         cuestionario: res.data.cuestionario._id,
                                         texto: respC[0]
