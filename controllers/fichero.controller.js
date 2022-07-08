@@ -139,7 +139,7 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                 config.ENUNCIADOS = enunciados.length;
 
                 axios
-                    .post('https://prueba-mongodb-tfg.herokuapp.com/intent/premierpadel', {
+                    .post('https://tfg-hector-22.herokuapp.com/intent/premierpadel', {
                         enunciados,
                         respuestas,
                         respuestasCorrectas,
