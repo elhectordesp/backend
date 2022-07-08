@@ -183,6 +183,7 @@ ficheroCtrl.lecturaFichero = async (req, res) => {
                             });
                     })
                     .catch(error => {
+                        console.error('ERRRRRRRRRROR');
                         console.error(error);
                         
                     });
