@@ -134,7 +134,7 @@ app.post("/", function (req, res) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             console.log('HOLAAAAAAA ', config.ENUNCIADOS);
-            if (config.ENUNCIADOS === 2) {
+            if (config.ENUNCIADOS === 8) {
               console.log('entro', );
               axios
                 .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
@@ -149,8 +149,7 @@ app.post("/", function (req, res) {
               response =
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
-                " de " +
-                config.ENUNCIADOS;
+                " de 2";
             } else {
               response =
                 "Se ha registrado tu respuesta <<" +
