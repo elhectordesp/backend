@@ -133,8 +133,9 @@ app.post("/", function (req, res) {
             if (res8.data) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
+            console.log('HOLAAAAAAA ', config.ENUNCIADOS);
             if (config.ENUNCIADOS === 2) {
-              console.log('entro');
+              console.log('entro', );
               axios
                 .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
                   nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
