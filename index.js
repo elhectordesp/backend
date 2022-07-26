@@ -92,7 +92,7 @@ app.post("/", function (req, res) {
               response =
                 "Se ha registrado tu respuesta <<" +
                 res1 +
-                ">> ¿Quieres seguir con el cuestionario? Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas;
+                ">> ¿Quieres seguir con el cuestionario? Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
             }
 
             res.json({
