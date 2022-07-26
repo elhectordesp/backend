@@ -68,7 +68,8 @@ app.post("/", function (req, res) {
           )
           .then((res8) => {
             if (res8.data) {
-              config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
+              console.log(data);
+              config.CONTADOR_ACIERTOS++;
             }
             if (config.ENUNCIADOS === 1) {
               axios
