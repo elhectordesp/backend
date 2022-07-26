@@ -92,8 +92,9 @@ app.post("/", function (req, res) {
 
                 if (!res8.data.buena) {
                   const auxi = '';
-                  auxi = res8.data.respuestasCorrectas[0].texto;
+                  auxi = res8.data.respuestasCorrectas[0].texto.toString();
                   auxi = auxi.split(':')[0];
+                  console.log(auxi);
                   response +=
                     " Vaya! Has fallado! La respuesta era: " +
                     auxi;
