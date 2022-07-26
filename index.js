@@ -100,7 +100,7 @@ app.post("/", function (req, res) {
                 " de " +
                 config.ENUNCIADOS;
             } else {
-              if (res.data.buena) {
+              if (res8.data.buena) {
                   response += " Correcta!";
               }
               response = "Se ha registrado tu respuesta <<" + res1 + ">>";
@@ -180,7 +180,7 @@ app.post("/", function (req, res) {
                 config.CONTADOR_ACIERTOS +
                 " de 2";
             } else {
-              if (res.data.buena) {
+              if (res8.data.buena) {
                 response += " Correcta!";
             }
               response = "Se ha registrado tu respuesta <<" + res1 + ">>";
