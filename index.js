@@ -68,7 +68,8 @@ app.post("/", function (req, res) {
           )
           .then((res8) => {
             if (res8.data) {
-              console.log(data);
+              console.log('res8 es ' , res8);
+              console.log('res8data es ' , res8.data);
               config.CONTADOR_ACIERTOS++;
             }
             if (config.ENUNCIADOS === 1) {
