@@ -168,7 +168,7 @@ app.post("/", function (req, res) {
 
                 response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
               }
-              response =
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
                 " de 2";
