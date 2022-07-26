@@ -88,11 +88,17 @@ app.post("/", function (req, res) {
                 config.CONTADOR_ACIERTOS +
                 " de " +
                 config.ENUNCIADOS;
+                if (!res8.data.buena) {
+                  response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+                }
             } else {
               response =
                 "Se ha registrado tu respuesta <<" +
                 res1 +
-                ">> ¿Quieres seguir con el cuestionario? Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+                ">> ¿Quieres seguir con el cuestionario?"
+                if (!res8.data.buena) {
+                  response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+                }
             }
 
             res.json({
@@ -152,11 +158,19 @@ app.post("/", function (req, res) {
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
                 " de 2";
+
+                if (!res8.data.buena) {
+                  response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+                }
             } else {
               response =
                 "Se ha registrado tu respuesta <<" +
                 res1 +
-                ">> ¿Quieres seguir con el cuestionario?" + " La respuesta correcta correcta era " + res8.data.respuestasCorrectas;
+                ">> ¿Quieres seguir con el cuestionario?";
+
+                if (!res8.data.buena) {
+                  response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+                }
             }
 
             res.json({
