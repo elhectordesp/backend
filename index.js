@@ -28,9 +28,12 @@ app.post("/", function (req, res) {
       aux = res.data.cuestionario[0]._id;
 
       axios
-        .post("https://prueba-mongodb-tfg.herokuapp.com/api/enunciado/contar-enunciados", {
-          cuestionario: res.data.cuestionario[0]._id,
-        })
+        .post(
+          "https://prueba-mongodb-tfg.herokuapp.com/api/enunciado/contar-enunciados",
+          {
+            cuestionario: res.data.cuestionario[0]._id,
+          }
+        )
         .then((res) => {
           config.ENUNCIADOS = res.data.contador;
         })
@@ -68,37 +71,47 @@ app.post("/", function (req, res) {
           )
           .then((res8) => {
             if (res8.data.buena) {
-              console.log('res8 es ' , res8);
-              console.log('res8data es ' , res8.data);
+              console.log("res8 es ", res8);
+              console.log("res8data es ", res8.data);
               config.CONTADOR_ACIERTOS++;
             }
             if (config.ENUNCIADOS === 1) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
                 });
-              response =
+
+                if (!res8.data.buena) {
+                  response +=
+                    " Vaya! Has fallado! La respuesta era: " +
+                    res8.data.respuestasCorrectas[0].texto;
+                }
+
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
                 " de " +
                 config.ENUNCIADOS;
-                if (!res8.data.buena) {
-                  response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
-                }
+              
             } else {
               response =
                 "Se ha registrado tu respuesta <<" +
                 res1 +
-                ">> ¿Quieres seguir con el cuestionario?"
-                if (!res8.data.buena) {
-                  response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
-                }
+                ">> ¿Quieres seguir con el cuestionario?";
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
             }
 
             res.json({
@@ -141,36 +154,43 @@ app.post("/", function (req, res) {
             if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
-            console.log('HOLAAAAAAA ', config.ENUNCIADOS);
+            console.log("HOLAAAAAAA ", config.ENUNCIADOS);
             if (config.ENUNCIADOS === 2) {
-              console.log('entro', );
+              console.log("entro");
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
                 });
-              response =
+
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
                 " de 2";
-
-                if (!res8.data.buena) {
-                  response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
-                }
             } else {
               response =
                 "Se ha registrado tu respuesta <<" +
                 res1 +
                 ">> ¿Quieres seguir con el cuestionario?";
 
-                if (!res8.data.buena) {
-                  response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
-                }
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
             }
 
             res.json({
@@ -215,11 +235,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 3) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -278,11 +301,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 4) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -341,11 +367,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 5) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -404,11 +433,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 6) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -467,11 +499,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 7) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -530,11 +565,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 8) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -593,11 +631,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 9) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -656,11 +697,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 10) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -719,11 +763,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 11) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -782,11 +829,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 12) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -845,11 +895,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 13) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -908,11 +961,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 14) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -971,11 +1027,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 15) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -1034,11 +1093,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 16) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -1097,11 +1159,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 17) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -1160,11 +1225,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 18) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -1223,11 +1291,14 @@ app.post("/", function (req, res) {
             }
             if (config.ENUNCIADOS === 19) {
               axios
-                .post("https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion", {
-                  nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
-                  cuestionario: resA.data.cuestionario[0]._id,
-                  fecha: new Date(),
-                })
+                .post(
+                  "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
+                  {
+                    nota: config.CONTADOR_ACIERTOS + "/" + config.ENUNCIADOS,
+                    cuestionario: resA.data.cuestionario[0]._id,
+                    fecha: new Date(),
+                  }
+                )
                 .then((res) => {})
                 .catch((error) => {
                   console.error(error);
@@ -1259,7 +1330,7 @@ app.post("/", function (req, res) {
 });
 
 app.listen(port, () => {
-  console.log('Servidor en el puerto', port);
+  console.log("Servidor en el puerto", port);
 });
 
 /*(async function () {
