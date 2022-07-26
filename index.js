@@ -91,12 +91,7 @@ app.post("/", function (req, res) {
                 });
 
               if (!res8.data.buena) {
-                console.log('entro aquiiiiiiiiiiii');
-                let auxi = "";
-                auxi = res8.data.respuestasCorrectas[0].texto.toString();
-                auxi = auxi.split(":")[0];
-                console.log(auxi);
-                response += " Vaya! Has fallado! La respuesta era: " + auxi;
+                response += " Vaya! Has fallado! La respuesta era: " + respuestasCorrectas[0].texto;
               }
 
               response +=
@@ -173,12 +168,7 @@ app.post("/", function (req, res) {
                 });
 
               if (!res8.data.buena) {
-                console.log('entro aquiiiiiiiiiiii');
-                let auxi = "";
-                auxi = res8.data.respuestasCorrectas[0].texto.toString();
-                auxi = auxi.split(":")[0];
-                console.log(auxi);
-                response += " Vaya! Has fallado! La respuesta era: " + auxi;
+                response += " Vaya! Has fallado! La respuesta era: " + respuestasCorrectas[0].texto;
               }
               response =
                 "Has acabado el cuestionario, tu puntuación es: " +
