@@ -90,6 +90,8 @@ app.post("/", function (req, res) {
 
               if (!res8.data.buena) {
                 response += " Vaya! Has fallado! La respuesta era: " + respuestasCorrectas[0].texto;
+              } else {
+                response += " Correcta!";
               }
 
               response +=
@@ -98,6 +100,9 @@ app.post("/", function (req, res) {
                 " de " +
                 config.ENUNCIADOS;
             } else {
+              if (res.data.buena) {
+                  response += " Correcta!";
+              }
               response = "Se ha registrado tu respuesta <<" + res1 + ">>";
               if (!res8.data.buena) {
                 response +=
@@ -167,12 +172,17 @@ app.post("/", function (req, res) {
                 console.log('esto es ', res8.data.respuestasCorrectas[0]);
 
                 response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+              } else {
+                  response += " Correcta!";
               }
               response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
                 " de 2";
             } else {
+              if (res.data.buena) {
+                response += " Correcta!";
+            }
               response = "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
