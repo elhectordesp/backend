@@ -264,7 +264,7 @@ app.post("/", function (req, res) {
               if (res8.data.buena) {
                 response += " Correcta!";
             }
-              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+              response += "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
                 response +=
@@ -344,7 +344,7 @@ app.post("/", function (req, res) {
               if (res8.data.buena) {
                 response += " Correcta!";
             }
-              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+              response += "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
                 response +=
@@ -424,7 +424,7 @@ app.post("/", function (req, res) {
               if (res8.data.buena) {
                 response += " Correcta!";
             }
-              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+              response += "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
                 response +=
@@ -504,7 +504,7 @@ app.post("/", function (req, res) {
               if (res8.data.buena) {
                 response += " Correcta!";
             }
-              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+              response += "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
                 response +=
@@ -584,7 +584,7 @@ app.post("/", function (req, res) {
               if (res8.data.buena) {
                 response += " Correcta!";
             }
-              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+              response += "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
                 response +=
@@ -664,7 +664,7 @@ app.post("/", function (req, res) {
               if (res8.data.buena) {
                 response += " Correcta!";
             }
-              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+              response += "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
                 response +=
