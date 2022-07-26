@@ -91,9 +91,12 @@ app.post("/", function (req, res) {
                 });
 
                 if (!res8.data.buena) {
+                  const auxi = '';
+                  auxi = res8.data.respuestasCorrectas[0].texto;
+                  auxi = auxi.split(':')[0];
                   response +=
                     " Vaya! Has fallado! La respuesta era: " +
-                    res8.data.respuestasCorrectas[0].texto;
+                    auxi;
                 }
 
               response +=
@@ -172,12 +175,11 @@ app.post("/", function (req, res) {
                 });
 
               if (!res8.data.buena) {
-                console.log(respuestasCorrectas)
                 response +=
                   " Vaya! Has fallado! La respuesta era: " +
-                  res8.data.respuestasCorrectas;
+                  res8.data.respuestasCorrectas[0].texto;
               }
-              response +=
+              response =
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
                 " de 2";
