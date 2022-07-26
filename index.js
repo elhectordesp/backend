@@ -132,7 +132,7 @@ app.post("/", function (req, res) {
             }
           )
           .then((res8) => {
-            if (res8.data) {
+            if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             console.log('HOLAAAAAAA ', config.ENUNCIADOS);
@@ -156,7 +156,7 @@ app.post("/", function (req, res) {
               response =
                 "Se ha registrado tu respuesta <<" +
                 res1 +
-                ">> ¿Quieres seguir con el cuestionario?";
+                ">> ¿Quieres seguir con el cuestionario?" + " La respuesta correcta correcta era " + res8.data.respuestasCorrectas;
             }
 
             res.json({
