@@ -67,7 +67,7 @@ app.post("/", function (req, res) {
             }
           )
           .then((res8) => {
-            if (res8.data) {
+            if (res8.data.buena) {
               console.log('res8 es ' , res8);
               console.log('res8data es ' , res8.data);
               config.CONTADOR_ACIERTOS++;
