@@ -172,9 +172,10 @@ app.post("/", function (req, res) {
                 });
 
               if (!res8.data.buena) {
+                console.log(respuestasCorrectas)
                 response +=
                   " Vaya! Has fallado! La respuesta era: " +
-                  res8.data.respuestasCorrectas[0].texto;
+                  res8.data.respuestasCorrectas;
               }
               response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
