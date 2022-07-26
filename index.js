@@ -231,7 +231,7 @@ app.post("/", function (req, res) {
             }
           )
           .then((res8) => {
-            if (res8.data) {
+            if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             if (config.ENUNCIADOS === 3) {
@@ -248,16 +248,31 @@ app.post("/", function (req, res) {
                 .catch((error) => {
                   console.error(error);
                 });
-              response =
+
+              if (!res8.data.buena) {
+                console.log('esto es ', res8.data.respuestasCorrectas[0]);
+
+                response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+              } else {
+                  response += " Correcta!";
+              }
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
-                " de " +
-                config.ENUNCIADOS;
+                " de 3";
             } else {
-              response =
-                "Se ha registrado tu respuesta <<" +
-                res1 +
-                ">> ¿Quieres seguir con el cuestionario?";
+              if (res8.data.buena) {
+                response += " Correcta!";
+            }
+              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
+
+              response += "¿Quieres seguir con el cuestionario?";
             }
 
             res.json({
@@ -272,7 +287,6 @@ app.post("/", function (req, res) {
         console.error(error);
       });
   }
-
   if (req.body.queryResult.action == "pregunta4") {
     let res1 = req.body.queryResult.parameters.respuesta4;
     let res2 = "";
@@ -297,7 +311,7 @@ app.post("/", function (req, res) {
             }
           )
           .then((res8) => {
-            if (res8.data) {
+            if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             if (config.ENUNCIADOS === 4) {
@@ -314,16 +328,31 @@ app.post("/", function (req, res) {
                 .catch((error) => {
                   console.error(error);
                 });
-              response =
+
+              if (!res8.data.buena) {
+                console.log('esto es ', res8.data.respuestasCorrectas[0]);
+
+                response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+              } else {
+                  response += " Correcta!";
+              }
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
-                " de " +
-                config.ENUNCIADOS;
+                " de 4";
             } else {
-              response =
-                "Se ha registrado tu respuesta <<" +
-                res1 +
-                ">> ¿Quieres seguir con el cuestionario?";
+              if (res8.data.buena) {
+                response += " Correcta!";
+            }
+              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
+
+              response += "¿Quieres seguir con el cuestionario?";
             }
 
             res.json({
@@ -338,7 +367,6 @@ app.post("/", function (req, res) {
         console.error(error);
       });
   }
-
   if (req.body.queryResult.action == "pregunta5") {
     let res1 = req.body.queryResult.parameters.respuesta5;
     let res2 = "";
@@ -363,7 +391,7 @@ app.post("/", function (req, res) {
             }
           )
           .then((res8) => {
-            if (res8.data) {
+            if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             if (config.ENUNCIADOS === 5) {
@@ -380,16 +408,31 @@ app.post("/", function (req, res) {
                 .catch((error) => {
                   console.error(error);
                 });
-              response =
+
+              if (!res8.data.buena) {
+                console.log('esto es ', res8.data.respuestasCorrectas[0]);
+
+                response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+              } else {
+                  response += " Correcta!";
+              }
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
-                " de " +
-                config.ENUNCIADOS;
+                " de 5";
             } else {
-              response =
-                "Se ha registrado tu respuesta <<" +
-                res1 +
-                ">> ¿Quieres seguir con el cuestionario?";
+              if (res8.data.buena) {
+                response += " Correcta!";
+            }
+              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
+
+              response += "¿Quieres seguir con el cuestionario?";
             }
 
             res.json({
@@ -404,7 +447,6 @@ app.post("/", function (req, res) {
         console.error(error);
       });
   }
-
   if (req.body.queryResult.action == "pregunta6") {
     let res1 = req.body.queryResult.parameters.respuesta6;
     let res2 = "";
@@ -429,7 +471,7 @@ app.post("/", function (req, res) {
             }
           )
           .then((res8) => {
-            if (res8.data) {
+            if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             if (config.ENUNCIADOS === 6) {
@@ -446,16 +488,31 @@ app.post("/", function (req, res) {
                 .catch((error) => {
                   console.error(error);
                 });
-              response =
+
+              if (!res8.data.buena) {
+                console.log('esto es ', res8.data.respuestasCorrectas[0]);
+
+                response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+              } else {
+                  response += " Correcta!";
+              }
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
-                " de " +
-                config.ENUNCIADOS;
+                " de 6";
             } else {
-              response =
-                "Se ha registrado tu respuesta <<" +
-                res1 +
-                ">> ¿Quieres seguir con el cuestionario?";
+              if (res8.data.buena) {
+                response += " Correcta!";
+            }
+              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
+
+              response += "¿Quieres seguir con el cuestionario?";
             }
 
             res.json({
@@ -470,7 +527,6 @@ app.post("/", function (req, res) {
         console.error(error);
       });
   }
-
   if (req.body.queryResult.action == "pregunta7") {
     let res1 = req.body.queryResult.parameters.respuesta7;
     let res2 = "";
@@ -495,7 +551,7 @@ app.post("/", function (req, res) {
             }
           )
           .then((res8) => {
-            if (res8.data) {
+            if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             if (config.ENUNCIADOS === 7) {
@@ -512,16 +568,31 @@ app.post("/", function (req, res) {
                 .catch((error) => {
                   console.error(error);
                 });
-              response =
+
+              if (!res8.data.buena) {
+                console.log('esto es ', res8.data.respuestasCorrectas[0]);
+
+                response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+              } else {
+                  response += " Correcta!";
+              }
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
-                " de " +
-                config.ENUNCIADOS;
+                " de 7";
             } else {
-              response =
-                "Se ha registrado tu respuesta <<" +
-                res1 +
-                ">> ¿Quieres seguir con el cuestionario?";
+              if (res8.data.buena) {
+                response += " Correcta!";
+            }
+              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
+
+              response += "¿Quieres seguir con el cuestionario?";
             }
 
             res.json({
@@ -536,7 +607,6 @@ app.post("/", function (req, res) {
         console.error(error);
       });
   }
-
   if (req.body.queryResult.action == "pregunta8") {
     let res1 = req.body.queryResult.parameters.respuesta8;
     let res2 = "";
@@ -561,7 +631,7 @@ app.post("/", function (req, res) {
             }
           )
           .then((res8) => {
-            if (res8.data) {
+            if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
             if (config.ENUNCIADOS === 8) {
@@ -578,16 +648,31 @@ app.post("/", function (req, res) {
                 .catch((error) => {
                   console.error(error);
                 });
-              response =
+
+              if (!res8.data.buena) {
+                console.log('esto es ', res8.data.respuestasCorrectas[0]);
+
+                response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
+              } else {
+                  response += " Correcta!";
+              }
+              response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
-                " de " +
-                config.ENUNCIADOS;
+                " de 8";
             } else {
-              response =
-                "Se ha registrado tu respuesta <<" +
-                res1 +
-                ">> ¿Quieres seguir con el cuestionario?";
+              if (res8.data.buena) {
+                response += " Correcta!";
+            }
+              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
+
+              if (!res8.data.buena) {
+                response +=
+                  " Vaya! Has fallado! La respuesta era: " +
+                  res8.data.respuestasCorrectas[0].texto;
+              }
+
+              response += "¿Quieres seguir con el cuestionario?";
             }
 
             res.json({
