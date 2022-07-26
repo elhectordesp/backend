@@ -91,6 +91,7 @@ app.post("/", function (req, res) {
                 });
 
               if (!res8.data.buena) {
+                console.log('entro aquiiiiiiiiiiii');
                 let auxi = "";
                 auxi = res8.data.respuestasCorrectas[0].texto.toString();
                 auxi = auxi.split(":")[0];
@@ -172,6 +173,7 @@ app.post("/", function (req, res) {
                 });
 
               if (!res8.data.buena) {
+                console.log('entro aquiiiiiiiiiiii');
                 let auxi = "";
                 auxi = res8.data.respuestasCorrectas[0].texto.toString();
                 auxi = auxi.split(":")[0];
@@ -186,6 +188,7 @@ app.post("/", function (req, res) {
               response = "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
+                console.log('entro aquiiiiiiiiiiii');
                 response +=
                   " Vaya! Has fallado! La respuesta era: " +
                   res8.data.respuestasCorrectas[0].texto;
