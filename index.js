@@ -90,27 +90,21 @@ app.post("/", function (req, res) {
                   console.error(error);
                 });
 
-                if (!res8.data.buena) {
-                  const auxi = '';
-                  auxi = res8.data.respuestasCorrectas[0].texto.toString();
-                  auxi = auxi.split(':')[0];
-                  console.log(auxi);
-                  response +=
-                    " Vaya! Has fallado! La respuesta era: " +
-                    auxi;
-                }
+              if (!res8.data.buena) {
+                let auxi = "";
+                auxi = res8.data.respuestasCorrectas[0].texto.toString();
+                auxi = auxi.split(":")[0];
+                console.log(auxi);
+                response += " Vaya! Has fallado! La respuesta era: " + auxi;
+              }
 
               response +=
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
                 " de " +
                 config.ENUNCIADOS;
-              
             } else {
-              response =
-                "Se ha registrado tu respuesta <<" +
-                res1 +
-                ">>";
+              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
               if (!res8.data.buena) {
                 response +=
                   " Vaya! Has fallado! La respuesta era: " +
@@ -178,23 +172,18 @@ app.post("/", function (req, res) {
                 });
 
               if (!res8.data.buena) {
-                const auxi = '';
-                  auxi = res8.data.respuestasCorrectas[0].texto.toString();
-                  auxi = auxi.split(':')[0];
-                  console.log(auxi);
-                  response +=
-                    " Vaya! Has fallado! La respuesta era: " +
-                    auxi;
+                let auxi = "";
+                auxi = res8.data.respuestasCorrectas[0].texto.toString();
+                auxi = auxi.split(":")[0];
+                console.log(auxi);
+                response += " Vaya! Has fallado! La respuesta era: " + auxi;
               }
               response =
                 "Has acabado el cuestionario, tu puntuación es: " +
                 config.CONTADOR_ACIERTOS +
                 " de 2";
             } else {
-              response =
-                "Se ha registrado tu respuesta <<" +
-                res1 +
-                ">>";
+              response = "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
                 response +=
