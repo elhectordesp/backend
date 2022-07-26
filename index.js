@@ -71,8 +71,6 @@ app.post("/", function (req, res) {
           )
           .then((res8) => {
             if (res8.data.buena) {
-              console.log("res8 es ", res8);
-              console.log("res8data es ", res8.data);
               config.CONTADOR_ACIERTOS++;
             }
             if (config.ENUNCIADOS === 1) {
@@ -150,9 +148,7 @@ app.post("/", function (req, res) {
             if (res8.data.buena) {
               config.CONTADOR_ACIERTOS = config.CONTADOR_ACIERTOS + 1;
             }
-            console.log("HOLAAAAAAA ", config.ENUNCIADOS);
             if (config.ENUNCIADOS === 2) {
-              console.log("entro");
               axios
                 .post(
                   "https://prueba-mongodb-tfg.herokuapp.com/api/evaluacion/crear-evaluacion",
@@ -168,7 +164,9 @@ app.post("/", function (req, res) {
                 });
 
               if (!res8.data.buena) {
-                response += " Vaya! Has fallado! La respuesta era: " + respuestasCorrectas[0].texto;
+                console.log('esto es ', res8.data.respuestasCorrectas[0]);
+
+                response += " Vaya! Has fallado! La respuesta era: " + res8.data.respuestasCorrectas[0].texto;
               }
               response =
                 "Has acabado el cuestionario, tu puntuación es: " +
@@ -178,7 +176,6 @@ app.post("/", function (req, res) {
               response = "Se ha registrado tu respuesta <<" + res1 + ">>";
 
               if (!res8.data.buena) {
-                console.log('entro aquiiiiiiiiiiii');
                 response +=
                   " Vaya! Has fallado! La respuesta era: " +
                   res8.data.respuestasCorrectas[0].texto;
